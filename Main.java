@@ -18,7 +18,7 @@ class PilhaGrupo {
         if (grupo.contains(pessoa1) && grupo.contains(pessoa2)) {
             return pessoa1 + " conhece " + pessoa2;
         }
-        return pessoa1 + " nao conhece " + pessoa2;
+        return pessoa1 + " não conhece " + pessoa2;
     }
 
     public boolean pessoaExiste(String pessoa) {
@@ -57,13 +57,13 @@ public class Main {
 
             while (grupoConsulta < 0 || grupoConsulta > 5) {
                 try {
-                    System.out.println("Digite o numero do grupo (1-5) ou digite 0 para mostrar todos os grupos:");
+                    System.out.println("Digite o número do grupo (1-5) ou digite 0 para mostrar todos os grupos:");
                     grupoConsulta = scanner.nextInt();
                     if (grupoConsulta < 0 || grupoConsulta > 5) {
-                        System.out.println("Grupo invalido. Digite um numero de grupo entre 0 e 5.");
+                        System.out.println("Grupo inválido. Digite um número de grupo entre 0 e 5.");
                     }
                 } catch (java.util.InputMismatchException e) {
-                    System.out.println("Entrada invalida. Digite um numero de grupo valido.");
+                    System.out.println("Entrada inválida. Digite um número de grupo válido.");
                     scanner.next(); // Limpa a entrada incorreta
                 }
             }
@@ -79,20 +79,32 @@ public class Main {
                 System.out.println("Digite o nome da segunda pessoa:");
                 String pessoa2 = scanner.next().toLowerCase();
 
-                String resultado = grupo.verificarConhecimento(pessoa1, pessoa2);
-                System.out.println(resultado);
-
                 System.out.println("Digite o nome da pessoa a buscar:");
                 String pessoaABuscar = scanner.next().toLowerCase();
 
-                if (grupo.pessoaExiste(pessoaABuscar)) {
-                    System.out.println(pessoaABuscar + " existe no grupo " + grupoConsulta + ".");
-                } else {
-                    System.out.println(pessoaABuscar + " nao existe no grupo " + grupoConsulta + ".");
+                String resultado1 = grupo.verificarConhecimento(pessoa1, pessoa2);
+                String resultado2 = "";
+
+                for (PilhaGrupo grupoExistente : grupos) {
+                    if (grupoExistente.pessoaExiste(pessoaABuscar)) {
+                        if (grupoExistente.equals(grupo)) {
+                            resultado2 = pessoaABuscar + " está no grupo " + (grupos[grupoConsulta - 1] == grupoExistente ? grupoConsulta : obterNumeroGrupo(grupos, grupoExistente)) + ".";
+                        } else {
+                            resultado2 = pessoaABuscar + " não se encontra nesse grupo, ela pertence ao grupo " + obterNumeroGrupo(grupos, grupoExistente) + ".";
+                        }
+                        break;
+                    }
                 }
+                if (resultado2.isEmpty()) {
+                    resultado2 = pessoaABuscar + " não existe em nenhum grupo.";
+                }
+
+                System.out.println("\nResultado:");
+                System.out.println(resultado1);
+                System.out.println(resultado2);
             }
 
-            System.out.println("Deseja pesquisar outro grupo? (Sim ou Nao):");
+            System.out.println("\nDeseja pesquisar outro grupo? (Sim ou Não):");
             String resposta = scanner.next().toLowerCase();
 
             if (!resposta.equals("sim")) {
@@ -108,7 +120,7 @@ public class Main {
         try {
             File arquivo = new File(caminhoDoArquivo);
             if (!arquivo.exists()) {
-                System.out.println("O arquivo 'grupos.txt' nao foi encontrado.");
+                System.out.println("O arquivo 'grupos.txt' não foi encontrado.");
                 return null;
             }
 
@@ -118,7 +130,7 @@ public class Main {
             for (int i = 0; i < 5; i++) {
                 String linha = bufferedReader.readLine();
                 if (linha == null) {
-                    System.out.println("Erro de formato no arquivo 'grupos.txt'. Verifique se ha grupos suficientes.");
+                    System.out.println("Erro de formato no arquivo 'grupos.txt'. Verifique se há grupos suficientes.");
                     return null;
                 }
                 String[] elementos = linha.split(",");
@@ -139,11 +151,17 @@ public class Main {
     public static void mostrarGrupos(PilhaGrupo[] grupos) {
         for (int i = 0; i < grupos.length; i++) {
             String listaPessoas = grupos[i].listarPessoas();
-            System.out.println("Grupo " + (i + 1) + " : " + listaPessoas);
+            System.out.println("Grupo " + obterNumeroGrupo(grupos, grupos[i]) + " : " + listaPessoas);
         }
     }
+
+    public static int obterNumeroGrupo(PilhaGrupo[] grupos, PilhaGrupo grupo) {
+        for (int i = 0; i < grupos.length; i++) {
+            if (grupos[i].equals(grupo)) {
+                return i + 1;
+            }
+        }
+        return -1;
+    }
 }
-
-
-
 
