@@ -1,5 +1,3 @@
-package filas;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -18,7 +16,7 @@ class PilhaGrupo {
         if (grupo.contains(pessoa1) && grupo.contains(pessoa2)) {
             return pessoa1 + " conhece " + pessoa2;
         }
-        return pessoa1 + " não conhece " + pessoa2;
+        return pessoa1 + " nao conhece " + pessoa2;
     }
 
     public boolean pessoaExiste(String pessoa) {
@@ -50,67 +48,35 @@ public class Main {
             return;
         }
 
+        // Mostrar todos os grupos
+        mostrarGrupos(grupos);
+
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
-            int grupoConsulta = -1;
+        System.out.println("\nDigite o primeiro nome que deseja procurar:");
+        String pessoa1 = scanner.next().toLowerCase();
 
-            while (grupoConsulta < 0 || grupoConsulta > 5) {
-                try {
-                    System.out.println("Digite o número do grupo (1-5) ou digite 0 para mostrar todos os grupos:");
-                    grupoConsulta = scanner.nextInt();
-                    if (grupoConsulta < 0 || grupoConsulta > 5) {
-                        System.out.println("Grupo inválido. Digite um número de grupo entre 0 e 5.");
-                    }
-                } catch (java.util.InputMismatchException e) {
-                    System.out.println("Entrada inválida. Digite um número de grupo válido.");
-                    scanner.next(); // Limpa a entrada incorreta
-                }
-            }
+        System.out.println("Digite o segundo nome que deseja procurar:");
+        String pessoa2 = scanner.next().toLowerCase();
 
-            if (grupoConsulta == 0) {
-                // Mostrar todos os grupos
-                mostrarGrupos(grupos);
-            } else {
-                PilhaGrupo grupo = grupos[grupoConsulta - 1];
+        System.out.println("Digite o nome da primeira pessoa que deseja saber se existe:");
+        String pessoaABuscar1 = scanner.next().toLowerCase();
 
-                System.out.println("Digite o nome da primeira pessoa:");
-                String pessoa1 = scanner.next().toLowerCase();
-                System.out.println("Digite o nome da segunda pessoa:");
-                String pessoa2 = scanner.next().toLowerCase();
+        System.out.println("Digite o nome da segunda pessoa que deseja saber se existe:");
+        String pessoaABuscar2 = scanner.next().toLowerCase();
 
-                System.out.println("Digite o nome da pessoa a buscar:");
-                String pessoaABuscar = scanner.next().toLowerCase();
+        // Verificar conhecimento entre as duas primeiras pessoas
+        String resultado1 = verificarConhecimentoEntrePessoas(grupos, pessoa1, pessoa2);
+        System.out.println("\nResultado:");
+        System.out.print(resultado1);
 
-                String resultado1 = grupo.verificarConhecimento(pessoa1, pessoa2);
-                String resultado2 = "";
+        // Verificar se a primeira pessoa existe em algum grupo
+        String resultado2 = verificarExistenciaPessoa(grupos, pessoaABuscar1);
+        System.out.println(resultado2);
 
-                for (PilhaGrupo grupoExistente : grupos) {
-                    if (grupoExistente.pessoaExiste(pessoaABuscar)) {
-                        if (grupoExistente.equals(grupo)) {
-                            resultado2 = pessoaABuscar + " está no grupo " + (grupos[grupoConsulta - 1] == grupoExistente ? grupoConsulta : obterNumeroGrupo(grupos, grupoExistente)) + ".";
-                        } else {
-                            resultado2 = pessoaABuscar + " não se encontra nesse grupo, ela pertence ao grupo " + obterNumeroGrupo(grupos, grupoExistente) + ".";
-                        }
-                        break;
-                    }
-                }
-                if (resultado2.isEmpty()) {
-                    resultado2 = pessoaABuscar + " não existe em nenhum grupo.";
-                }
-
-                System.out.println("\nResultado:");
-                System.out.println(resultado1);
-                System.out.println(resultado2);
-            }
-
-            System.out.println("\nDeseja pesquisar outro grupo? (Sim ou Não):");
-            String resposta = scanner.next().toLowerCase();
-
-            if (!resposta.equals("sim")) {
-                break;
-            }
-        }
+        // Verificar se a segunda pessoa existe em algum grupo
+        String resultado3 = verificarExistenciaPessoa(grupos, pessoaABuscar2);
+        System.out.println(resultado3);
 
         scanner.close();
     }
@@ -151,17 +117,40 @@ public class Main {
     public static void mostrarGrupos(PilhaGrupo[] grupos) {
         for (int i = 0; i < grupos.length; i++) {
             String listaPessoas = grupos[i].listarPessoas();
-            System.out.println("Grupo " + obterNumeroGrupo(grupos, grupos[i]) + " : " + listaPessoas);
+            System.out.println("Grupo " + (i + 1) + " : " + listaPessoas);
         }
     }
 
-    public static int obterNumeroGrupo(PilhaGrupo[] grupos, PilhaGrupo grupo) {
-        for (int i = 0; i < grupos.length; i++) {
-            if (grupos[i].equals(grupo)) {
-                return i + 1;
+    public static String verificarConhecimentoEntrePessoas(PilhaGrupo[] grupos, String pessoa1, String pessoa2) {
+        StringBuilder resultado = new StringBuilder();
+        boolean conhecem = false;
+
+        for (PilhaGrupo grupo : grupos) {
+            String validacao = grupo.verificarConhecimento(pessoa1, pessoa2);
+            resultado.append(validacao).append("\n");
+
+            // Se já encontrou uma vez que se conhecem, não precisa continuar verificando
+            if (validacao.contains("conhece")) {
+                conhecem = true;
+                break;
             }
         }
-        return -1;
+
+        // Se não se conhecem em nenhum grupo, exiba uma mensagem única
+        if (!conhecem) {
+            resultado.setLength(0);
+            resultado.append(pessoa1).append(" nao conhece ").append(pessoa2);
+        }
+
+        return resultado.toString();
+    }
+
+    public static String verificarExistenciaPessoa(PilhaGrupo[] grupos, String pessoaABuscar) {
+        for (PilhaGrupo grupo : grupos) {
+            if (grupo.pessoaExiste(pessoaABuscar)) {
+                return pessoaABuscar + " existe.";
+            }
+        }
+        return pessoaABuscar + " nao existe.";
     }
 }
-
