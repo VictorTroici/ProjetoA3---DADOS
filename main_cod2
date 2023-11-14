@@ -1,0 +1,100 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class PilhaGrupo {
+    private List<String> grupo = new ArrayList<>();
+
+    public void adicionarPessoa(String pessoa) {
+        grupo.add(pessoa);
+    }
+
+    public String verificarConhecimento(String pessoa1, String pessoa2) {
+        if (grupo.contains(pessoa1) && grupo.contains(pessoa2)) {
+            return pessoa1 + " conhece " + pessoa2;
+        }
+        return pessoa1 + " nao conhece " + pessoa2;
+    }
+
+    public boolean pessoaExiste(String pessoa) {
+        return grupo.contains(pessoa);
+    }
+
+    public String listarPessoas() {
+        StringBuilder sb = new StringBuilder();
+        for (String pessoa : grupo) {
+            sb.append(pessoa).append(",");
+        }
+        // Remova a última vírgula
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1);
+        }
+        return sb.toString();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<PilhaGrupo> grupos = new ArrayList<>();
+        List<String> resultados = new ArrayList<>();
+
+        // Leitura dos grupos
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Grupo " + (i + 1) + ": ");
+            String linha = scanner.nextLine();
+            String[] nomes = linha.split("\\s+");
+
+            PilhaGrupo grupo = new PilhaGrupo();
+            for (String nome : nomes) {
+                grupo.adicionarPessoa(nome);
+            }
+            grupos.add(grupo);
+        }
+
+        // Leitura das verificações de existência
+        for (int i = 0; i < 2; i++) {
+            System.out.print("Existe: ");
+            String pessoaABuscar = scanner.next().toLowerCase();
+
+            boolean existe = false;
+            for (PilhaGrupo grupo : grupos) {
+                if (grupo.pessoaExiste(pessoaABuscar)) {
+                    resultados.add("[" + pessoaABuscar + "] existe!");
+                    existe = true;
+                    break;
+                }
+            }
+            if (!existe) {
+                resultados.add("[" + pessoaABuscar + "] Nao existe!");
+            }
+        }
+
+        // Leitura das verificações de conhecimento
+        for (int i = 0; i < 2; i++) {
+            System.out.print("Conhece: ");
+            String pessoa1 = scanner.next().toLowerCase();
+            String pessoa2 = scanner.next().toLowerCase();
+
+            boolean encontrou = false;
+            for (PilhaGrupo grupo : grupos) {
+                if (grupo.pessoaExiste(pessoa1) && grupo.pessoaExiste(pessoa2)) {
+                    resultados.add("[" + pessoa1 + "] conhece [" + pessoa2 + "]");
+                    encontrou = true;
+                    break;
+                }
+            }
+            if (!encontrou) {
+                resultados.add("[" + pessoa1 + "] nao conhece [" + pessoa2 + "]");
+            }
+        }
+
+        // Mostrar todos os resultados
+        System.out.println("\nResultados:");
+        for (String resultado : resultados) {
+            System.out.println(resultado);
+        }
+
+        scanner.close();
+    }
+}
