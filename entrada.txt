@@ -1,0 +1,7 @@
+Grupo: victor cabral lucas 
+Grupo: pedro jose
+Grupo: juan henrique
+Existe: lucas
+Existe: gugu
+Conhece: victor cabral
+Conhece: pedro gugu
