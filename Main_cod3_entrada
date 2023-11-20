@@ -1,0 +1,90 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+class PilhaGrupo {
+    private List<String> grupo = new ArrayList<>();
+
+    public void adicionarPessoa(String pessoa) {
+        grupo.add(pessoa);
+    }
+
+    public String verificarConhecimento(String pessoa1, String pessoa2) {
+        if (grupo.contains(pessoa1) && grupo.contains(pessoa2)) {
+            return pessoa1 + " conhece " + pessoa2;
+        }
+        return pessoa1 + " NÃO conhece " + pessoa2;
+    }
+
+    public boolean pessoaExiste(String pessoa) {
+        return grupo.contains(pessoa);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<PilhaGrupo> grupos = new ArrayList<>();
+        List<String> resultados = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Victo\\OneDrive\\Documentos\\NetBeansProjects\\FILAS\\src\\entrada.txt"))) {
+            String linha;
+
+            while ((linha = br.readLine()) != null) {
+                String[] partes = linha.split("\\s+");
+                String comando = partes[0].toLowerCase();
+
+                switch (comando) {
+                    case "grupo:":
+                        PilhaGrupo grupo = new PilhaGrupo();
+                        for (int i = 1; i < partes.length; i++) {
+                            grupo.adicionarPessoa(partes[i]);
+                        }
+                        grupos.add(grupo);
+                        break;
+
+                    case "existe:":
+                        String pessoaABuscar = partes[1].toLowerCase();
+                        boolean existe = false;
+                        for (PilhaGrupo g : grupos) {
+                            if (g.pessoaExiste(pessoaABuscar)) {
+                                resultados.add("[" + pessoaABuscar + "] existe!");
+                                existe = true;
+                                break;
+                            }
+                        }
+                        if (!existe) {
+                            resultados.add("[" + pessoaABuscar + "] Naa existe!");
+                        }
+                        break;
+
+                    case "conhece:":
+                        String pessoa1 = partes[1].toLowerCase();
+                        String pessoa2 = partes[2].toLowerCase();
+                        boolean encontrou = false;
+                        for (PilhaGrupo g : grupos) {
+                            if (g.pessoaExiste(pessoa1) && g.pessoaExiste(pessoa2)) {
+                                resultados.add("[" + pessoa1 + "] conhece [" + pessoa2 + "]");
+                                encontrou = true;
+                                break;
+                            }
+                        }
+                        if (!encontrou) {
+                            resultados.add("[" + pessoa1 + "] Nao conhece [" + pessoa2 + "]");
+                        }
+                        break;
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Mostrar todos os resultados
+        System.out.println("Resultados:");
+        for (String resultado : resultados) {
+            System.out.println(resultado);
+        }
+    }
+}
