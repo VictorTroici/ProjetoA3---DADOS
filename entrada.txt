@@ -1,7 +1,26 @@
 Grupo: victor cabral lucas 
 Grupo: pedro jose
 Grupo: juan henrique
-Existe: lucas
+Grupo: ana joana pedro 
+Existe: lucas 
+Existe: ze
 Existe: gugu
 Conhece: victor cabral
 Conhece: pedro gugu
+ChegarPessoa: joana
+ChegarPessoa: joaozin
+ChegarPessoa: ana
+CriarOutraFila:
+ChegarPessoa: pedro
+ChegarPessoa: ze
+CriarOutraFila:
+ChegarPessoa: jose
+ChegarPessoa: lucas
+ChegarPessoa: gugu
+ChegarPessoa: valentina
+ChegarPessoa: cabral
+AtenderFila:
+Imprimir:
+ChegarPessoa: joana
+ChegarPessoa: maria
+ChegarPessoa: pedro
