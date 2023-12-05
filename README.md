@@ -74,7 +74,3 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar
 ## Conclusão 🎉
 
 O Projeto "Pessoas Conhecem Pessoas" oferece uma abordagem única para simular interações sociais e filas, proporcionando insights práticos e funcionais.
-
-## Licença 📜
-
-Este projeto é licenciado sob a [Licença MIT](LICENSE).
