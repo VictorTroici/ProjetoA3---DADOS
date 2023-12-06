@@ -74,3 +74,12 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar
 ## Conclusão 🎉
 
 O Projeto "Pessoas Conhecem Pessoas" oferece uma abordagem única para simular interações sociais e filas, proporcionando insights práticos e funcionais.
+
+## Participantes 
+
+Fernando Hideyoshi Yonamine Fusada RA: 820148604
+Guilherme Cesar de Brito RA: 8222247316
+Lucas Cabral das Virgens RA: 820138102
+Thiago Masaharu Sakugawa RA: 820142348
+Victor Camargo Troici RA: 822132217
+Pedro Antônio Gomes Carvalho RA: 822135414
