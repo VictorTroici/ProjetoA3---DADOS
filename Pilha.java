@@ -22,7 +22,7 @@ public class Main {
         
         
 
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Victor Troici\\OneDrive\\Documentos\\NetBeansProjects\\JavaApplication4\\src\\pilha\\entrada.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("entrada.txt"))) {
             String linha;
             
            
