@@ -61,7 +61,7 @@ Na primeira fase, a estrutura de dados "Pessoas conhecem pessoas" foi criada, pe
 ## Execução do Projeto ▶️
 
 1. Compile o código Java.
-2. Execute o arquivo compilado, fornecendo o caminho absoluto para o arquivo de entrada.
+3. Execute o arquivo compilado, fornecendo o caminho absoluto para o arquivo de entrada.
 
 ## Demonstração Prática dos Casos de Teste 🚀
 
@@ -77,9 +77,9 @@ O Projeto "Pessoas Conhecem Pessoas" oferece uma abordagem única para simular i
 
 ## Participantes 
 
-Fernando Hideyoshi Yonamine Fusada RA: 820148604
-Guilherme Cesar de Brito RA: 8222247316
-Lucas Cabral das Virgens RA: 820138102
-Thiago Masaharu Sakugawa RA: 820142348
-Victor Camargo Troici RA: 822132217
-Pedro Antônio Gomes Carvalho RA: 822135414
+1. Fernando Hideyoshi Yonamine Fusada RA: 820148604
+2. Guilherme Cesar de Brito RA: 8222247316
+3. Lucas Cabral das Virgens RA: 820138102
+4. Thiago Masaharu Sakugawa RA: 820142348
+5. Victor Camargo Troici RA: 822132217
+6. Pedro Antônio Gomes Carvalho RA: 822135414
